@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Question for Subha</title>
+    <!-- Importing Google Fonts for that clean, premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+    <!-- Importing GSAP for silky smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #050505; color: white; font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+        /* The Cinematic Background */
+        #bg { position: absolute; inset: 0; width: 100vw; height: 100vh; object-fit: cover; filter: brightness(0.5); z-index: 0; transform: scale(1); }
+        .dark-void { position: absolute; inset: 0; background: radial-gradient(circle, #2a0000 0%, #000000 100%); z-index: 1; opacity: 0; pointer-events: none; }
+
+        /* Premium Glassmorphism Panel */
+        .glass-panel { position: relative; z-index: 10; background: rgba(20, 20, 20, 0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 4rem; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.6); max-width: 700px; }
+        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff, #aaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { font-size: 1.2rem; color: #ccc; margin-bottom: 3rem; }
+
+        /* Modern Buttons */
+        .btn-container { display: flex; justify-content: center; gap: 1.5rem; align-items: center; position: relative; }
+        button { cursor: pointer; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; padding: 1.2rem 3rem; transition: background 0.3s; }
+        #yesBtn { background: white; color: black; box-shadow: 0 0 20px rgba(255,255,255,0.2); z-index: 2; }
+        #yesBtn:hover { box-shadow: 0 0 40px rgba(255,255,255,0.5); }
+        #noBtn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); z-index: 2; }
+
+        /* The Vibe Shift Elements (Hidden initially) */
+        #eminem-img { position: absolute; z-index: 5; height: 90vh; max-width: 90vw; object-fit: contain; opacity: 0; pointer-events: none; filter: drop-shadow(0 0 40px red); }
+        .blood-pact-container { position: relative; z-index: 10; display: none; text-align: center; width: 100%; }
+        h2.glitch { font-family: 'Courier Prime', monospace; font-size: 4.5rem; color: #ff0000; text-transform: uppercase; text-shadow: 4px 4px 0px #4a0000; margin-bottom: 2rem; }
+        .terms { font-family: 'Courier Prime', monospace; color: #ffbb00; font-size: 1.3rem; line-height: 1.8; text-align: left; background: rgba(0,0,0,0.85); padding: 2.5rem; border-left: 6px solid #ff0000; display: inline-block; box-shadow: 0 20px 50px rgba(255,0,0,0.2); }
+        .terms li { margin-bottom: 1rem; list-style: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Backgrounds -->
+    <img id="bg" src="sunset_kart.jpg" alt="Background">
+    <div class="dark-void" id="voidBg"></div>
+
+    <!-- The Eminem Meme -->
+    <img id="eminem-img" src="image_26f600.jpg" alt="Eminem Rose">
+
+    <!-- The Setup -->
+    <div class="glass-panel" id="mainCard">
+        <h1>Subha.</h1>
+        <p class="subtitle">Will you go on a Go-Kart date with me?</p>
+        <div class="btn-container">
+            <button id="yesBtn">YES</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <!-- The Punchline -->
+    <div class="blood-pact-container" id="pactCard">
+        <h2 class="glitch">BLOOD PACT SEALED.</h2>
+        <ul class="terms">
+            <li>[1] You are legally obligated to let me win.</li>
+            <li>[2] If you lap me, I will literally cry.</li>
+            <li>[3] Loser buys dinner. See you on the track.</li>
+            <li style="color: #666; margin-top: 2rem;">Authorized by: Harish</li>
+        </ul>
+    </div>
+
+    <script>
+        // Target elements
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainCard = document.getElementById('mainCard');
+        const pactCard = document.getElementById('pactCard');
+        const bg = document.getElementById('bg');
+        const voidBg = document.getElementById('voidBg');
+        const eminem = document.getElementById('eminem-img');
+
+        const pleas = ["Are you sure?", "I'll let you win!", "Free food?", "Pleeease?", "Stop running."];
+        let pleaIndex = 0;
+
+        // Intro Cinematic Animation
+        gsap.to(bg, { scale: 1.05, duration: 20, ease: "sine.out" });
+        gsap.from(mainCard, { y: 40, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.5 });
+
+        // Make the NO button dodge the mouse
+        noBtn.addEventListener('mouseenter', () => {
+            const moveX = (Math.random() - 0.5) * 200;
+            const moveY = (Math.random() - 0.5) * 100;
+
+            gsap.to(noBtn, {
+                x: moveX,
+                y: moveY,
+                duration: 0.4,
+                ease: "back.out(1.5)"
+            });
+
+            // Swell the YES button to manipulate her choice
+            gsap.to(yesBtn, { scale: "+=0.15", duration: 0.3 });
+        });
+
+        // If you manage to click NO, cycle the text
+        noBtn.addEventListener('click', () => {
+            noBtn.innerText = pleas[pleaIndex % pleas.length];
+            pleaIndex++;
+        });
+
+        // THE VIBE SHIFT
+        yesBtn.addEventListener('click', () => {
+            const tl = gsap.timeline();
+
+            // 1. Instantly kill the cute vibe
+            tl.to(mainCard, { scale: 0.8, opacity: 0, duration: 0.3, ease: "power2.inOut" })
+              .to(bg, { opacity: 0, duration: 0.1 }, "-=0.1")
+              .to(voidBg, { opacity: 1, duration: 0.1 }, "-=0.1");
+
+            // 2. Camera Shake Effect
+            tl.to("body", {
+                x: "random(-15, 15)",
+                y: "random(-15, 15)",
+                duration: 0.05,
+                repeat: 8,
+                yoyo: true
+            });
+
+            // 3. Slam the Eminem image in with a heavy bounce
+            tl.set(eminem, { opacity: 1, scale: 0, rotation: -45 })
+              .to(eminem, { scale: 1, rotation: 0, duration: 1, ease: "elastic.out(1, 0.3)" }, "-=0.4");
+
+            // 4. Slide in the Blood Pact text
+            tl.set(pactCard, { display: "block" })
+              .from(".glitch", { y: -50, opacity: 0, duration: 0.6, ease: "power4.out" }, "-=0.8")
+              .from(".terms li", { x: -30, opacity: 0, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.5");
+
+            // 5. Add a subtle continuous heartbeat pulse to Eminem to match the motion blur
+            gsap.to(eminem, { scale: 1.03, duration: 0.4, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1 });
+        });
+    </script>
+</body>
+</html>
